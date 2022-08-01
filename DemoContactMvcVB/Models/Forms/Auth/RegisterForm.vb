@@ -4,8 +4,8 @@ Public Class RegisterForm
     <Required>
     <EmailAddress>
     Public Property Email As String
+    '<RegularExpression("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&-+=()])(?=\\S+$).{8, 20}$")>
     <Required>
-    <RegularExpression("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&-+=()])(?=\\S+$).{8, 20}$")>
     <DataType(DataType.Password)>
     Public Property Passwd As String
     <Compare(NameOf(Passwd))>

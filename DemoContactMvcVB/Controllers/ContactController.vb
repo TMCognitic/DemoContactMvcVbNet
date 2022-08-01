@@ -2,7 +2,7 @@
 
 Namespace Controllers
     Public Class ContactController
-        Inherits Controller
+        Inherits BaseController
 
         ' GET: Contact
         Function Index() As ActionResult

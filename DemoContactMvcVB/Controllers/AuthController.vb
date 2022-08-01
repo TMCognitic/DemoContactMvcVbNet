@@ -1,8 +1,12 @@
-﻿Imports System.Web.Mvc
+﻿Imports DemoContactMvcVB.Tools.DbConnectionExtensions
+
+Imports System.Data.Common
+Imports System.Data.SqlClient
+Imports System.Web.Mvc
 
 Namespace Controllers
     Public Class AuthController
-        Inherits Controller
+        Inherits BaseController
 
         ' GET: Auth
         Function Index() As ActionResult
@@ -19,8 +23,16 @@ Namespace Controllers
                 Return View(form)
             End If
 
-            'Inscription dans la DB
-            Return RedirectToAction("Login")
+            Try
+                Using dbConnection As DbConnection = New SqlConnection()
+                    dbConnection.ConnectionString = ConnectionString
+                    dbConnection.ExecuteNonQuery("TSP_Register", True, New With {Key .Email = form.Email, .Passwd = form.Passwd})
+                    Return RedirectToAction("Login")
+                End Using
+            Catch ex As Exception
+                ModelState.AddModelError("", ex.Message)
+                Return View(form)
+            End Try
         End Function
 
         Function Login() As ActionResult
@@ -33,14 +45,27 @@ Namespace Controllers
                 Return View(form)
             End If
 
-            Dim Id As Integer = 0
+            Try
+                Using dbConnection As DbConnection = New SqlConnection()
+                    dbConnection.ConnectionString = ConnectionString
+                    Dim Id As Integer? = CType(dbConnection.ExecuteScalar("TSP_Authorize", True, New With {Key .Email = form.Email, .Passwd = form.Passwd}), Integer?)
 
-            If Id = 0 Then
-                ModelState.AddModelError("", "Bad email or password!")
+                    If Not Id.HasValue Then
+                        ModelState.AddModelError("", "Bad email or password!")
+                        Return View(form)
+                    End If
+
+                    Return RedirectToAction("Index", "Contact")
+                End Using
+            Catch ex As Exception
+                ModelState.AddModelError("", ex.Message)
+                Return View(form)
+            End Try
+
+
+            If Not ModelState.IsValid Then
                 Return View(form)
             End If
-
-            Return RedirectToAction("Index", "Contact")
         End Function
     End Class
 End Namespace

@@ -151,6 +151,7 @@
     <Compile Include="App_Start\FilterConfig.vb" />
     <Compile Include="App_Start\RouteConfig.vb" />
     <Compile Include="Controllers\AuthController.vb" />
+    <Compile Include="Controllers\BaseController.vb" />
     <Compile Include="Controllers\ContactController.vb" />
     <Compile Include="Global.asax.vb">
       <DependentUpon>Global.asax</DependentUpon>
@@ -158,6 +159,8 @@
     <Compile Include="Models\Forms\Auth\LoginForm.vb" />
     <Compile Include="Models\Forms\Auth\RegisterForm.vb" />
     <Compile Include="Models\Forms\Contact\CreateContactForm.vb" />
+    <Compile Include="Models\Forms\Contact\DisplayContactFull.vb" />
+    <Compile Include="Models\Forms\Contact\DisplayContactLight.vb" />
     <Compile Include="Models\Forms\Contact\EditContactForm.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
@@ -217,6 +220,10 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
     <Content Include="Views\Auth\Register.vbhtml" />
     <Content Include="Views\Auth\Login.vbhtml" />
+    <Content Include="Views\Contact\Index.vbhtml" />
+    <Content Include="Views\Contact\Details.vbhtml" />
+    <Content Include="Views\Contact\Create.vbhtml" />
+    <Content Include="Views\Contact\Edit.vbhtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />
@@ -247,7 +254,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Contact\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DemoContactMvcVB.Tools\DemoContactMvcVB.Tools.vbproj">
+      <Project>{4ab1c968-22d7-4685-91d5-6029d45353b6}</Project>
+      <Name>DemoContactMvcVB.Tools</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
