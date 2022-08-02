@@ -1,4 +1,7 @@
-﻿Imports System.Web.Mvc
+﻿Imports System.Data.Common
+Imports System.Data.SqlClient
+Imports System.Web.Mvc
+Imports DemoContactMvcVB.Tools
 
 Namespace Controllers
     Public Class ContactController
@@ -6,7 +9,24 @@ Namespace Controllers
 
         ' GET: Contact
         Function Index() As ActionResult
-            Return View()
+            If SessionManager.UserId Is Nothing Then
+                Return RedirectToAction("Login", "Auth")
+            End If
+
+            Try
+                Using dbConnection As DbConnection = New SqlConnection()
+                    dbConnection.ConnectionString = ConnectionString
+                    Dim contacts As IEnumerable(Of Contact) = dbConnection.ExecuteReader("Select Id, LastName, FirstName, BirthDay, Email, Phone, UserId FROM Contact WHERE UserId = @Id",
+                                                                                         Function(dr) dr.ToContact(),
+                                                                                         immediately:=True,
+                                                                                         parameters:=New With {Key .Id = SessionManager.UserId})
+
+                    Return View(contacts.Select(Function(c) New DisplayContactLight() With {.Id = c.Id, .LastName = c.LastName, .FirstName = c.FirstName}))
+                End Using
+            Catch ex As Exception
+                ViewBag.Error = ex.Message
+                Return View(New List(Of DisplayContactLight)())
+            End Try
         End Function
 
         ' GET: Contact/Details/5

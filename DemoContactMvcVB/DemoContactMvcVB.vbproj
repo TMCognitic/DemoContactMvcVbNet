@@ -156,6 +156,9 @@
     <Compile Include="Global.asax.vb">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Infrastructure\SessionManager.vb" />
+    <Compile Include="Models\Contact.vb" />
+    <Compile Include="Models\DataRecordExtensions.vb" />
     <Compile Include="Models\Forms\Auth\LoginForm.vb" />
     <Compile Include="Models\Forms\Auth\RegisterForm.vb" />
     <Compile Include="Models\Forms\Contact\CreateContactForm.vb" />

@@ -16,14 +16,26 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
+                    @If SessionManager.UserId Is Nothing Then
+                        @:<span Class="icon-bar"></span>
+                        @:<span Class="icon-bar"></span>
+                    Else
+                        @:<span Class="icon-bar"></span>
+                    End If
                 </button>
-                @Html.ActionLink("Nom d'application", "Index", "Home", New With { .area = "" }, New With { .class = "navbar-brand" })
+                @Html.ActionLink("Nom d'application", "Index", "Home", New With {.area = ""}, New With {.class = "navbar-brand"})
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("À propos de", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    @If SessionManager.UserId Is Nothing Then
+                        @:<li>@Html.ActionLink("Register", "Register", "Auth")</li>
+                        @:<li>@Html.ActionLink("Login", "Login", "Auth")</li>
+                    Else
+                        @:<li>@Html.ActionLink("Logout", "Logout", "Auth")</li>
+                    End If
                 </ul>
             </div>
         </div>

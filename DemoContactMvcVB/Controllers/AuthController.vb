@@ -55,6 +55,7 @@ Namespace Controllers
                         Return View(form)
                     End If
 
+                    SessionManager.UserId = Id
                     Return RedirectToAction("Index", "Contact")
                 End Using
             Catch ex As Exception
@@ -66,6 +67,11 @@ Namespace Controllers
             If Not ModelState.IsValid Then
                 Return View(form)
             End If
+        End Function
+
+        Function Logout() As ActionResult
+            Session.Abandon()
+            Return RedirectToAction("Index", "Home")
         End Function
     End Class
 End Namespace
