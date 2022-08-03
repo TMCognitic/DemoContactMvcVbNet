@@ -31,26 +31,27 @@ End Code
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(Function(model) model.BirthDay, htmlAttributes:= New With { .class = "control-label col-md-2" })
+            @Html.LabelFor(Function(model) model.BirthDay, htmlAttributes:=New With {.class = "control-label col-md-2"})
             <div class="col-md-10">
-                @Html.EditorFor(Function(model) model.BirthDay, New With { .htmlAttributes = New With { .class = "form-control" } })
-                @Html.ValidationMessageFor(Function(model) model.BirthDay, "", New With { .class = "text-danger" })
+                @*Html.EditorFor(Function(model) model.BirthDay.Date, New With {.htmlAttributes = New With {.class = "form-control"}})*@
+                @Html.TextBoxFor(Function(model) model.BirthDay, "{0:yyyy-MM-dd}", New With {.class = "form-control", .type = "date"})
+                @Html.ValidationMessageFor(Function(model) model.BirthDay, "", New With {.class = "text-danger"})
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(Function(model) model.Email, htmlAttributes:= New With { .class = "control-label col-md-2" })
+            @Html.LabelFor(Function(model) model.Email, htmlAttributes:=New With {.class = "control-label col-md-2"})
             <div class="col-md-10">
-                @Html.EditorFor(Function(model) model.Email, New With { .htmlAttributes = New With { .class = "form-control" } })
-                @Html.ValidationMessageFor(Function(model) model.Email, "", New With { .class = "text-danger" })
+                @Html.EditorFor(Function(model) model.Email, New With {.htmlAttributes = New With {.class = "form-control"}})
+                @Html.ValidationMessageFor(Function(model) model.Email, "", New With {.class = "text-danger"})
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(Function(model) model.Phone, htmlAttributes:= New With { .class = "control-label col-md-2" })
+            @Html.LabelFor(Function(model) model.Phone, htmlAttributes:=New With {.class = "control-label col-md-2"})
             <div class="col-md-10">
-                @Html.EditorFor(Function(model) model.Phone, New With { .htmlAttributes = New With { .class = "form-control" } })
-                @Html.ValidationMessageFor(Function(model) model.Phone, "", New With { .class = "text-danger" })
+                @Html.EditorFor(Function(model) model.Phone, New With {.htmlAttributes = New With {.class = "form-control"}})
+                @Html.ValidationMessageFor(Function(model) model.Phone, "", New With {.class = "text-danger"})
             </div>
         </div>
 

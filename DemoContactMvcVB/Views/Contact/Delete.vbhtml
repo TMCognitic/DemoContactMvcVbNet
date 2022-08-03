@@ -1,10 +1,11 @@
 ﻿@ModelType DemoContactMvcVB.DisplayContactFull
 @Code
-    ViewData("Title") = "Details"
+    ViewData("Title") = "Delete"
 End Code
 
-<h2>Details</h2>
+<h2>Delete</h2>
 
+<h3>Are you sure you want to delete this?</h3>
 <div>
     <h4>DisplayContactFull</h4>
     <hr />
@@ -48,9 +49,14 @@ End Code
         <dd>
             @Html.DisplayFor(Function(model) model.Phone)
         </dd>
+
     </dl>
+    @Using (Html.BeginForm())
+        @Html.AntiForgeryToken()
+
+        @<div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    End Using
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", New With {.id = Model.Id}) |
-    @Html.ActionLink("Back to List", "Index")
-</p>

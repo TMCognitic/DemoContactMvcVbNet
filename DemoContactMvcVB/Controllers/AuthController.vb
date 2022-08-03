@@ -1,12 +1,19 @@
-﻿Imports DemoContactMvcVB.Tools.DbConnectionExtensions
+﻿Imports DemoContactMvcVB.Models
+Imports DemoContactMvcVB.Tools.DbConnectionExtensions
 
 Imports System.Data.Common
 Imports System.Data.SqlClient
-Imports System.Web.Mvc
+Imports Microsoft.Extensions.DependencyInjection
 
 Namespace Controllers
     Public Class AuthController
         Inherits BaseController
+
+        Private _authService As AuthService
+
+        Public Sub New()
+            _authService = ServiceProvider.GetService(Of AuthService)()
+        End Sub
 
         ' GET: Auth
         Function Index() As ActionResult
@@ -23,16 +30,7 @@ Namespace Controllers
                 Return View(form)
             End If
 
-            Try
-                Using dbConnection As DbConnection = New SqlConnection()
-                    dbConnection.ConnectionString = ConnectionString
-                    dbConnection.ExecuteNonQuery("TSP_Register", True, New With {Key .Email = form.Email, .Passwd = form.Passwd})
-                    Return RedirectToAction("Login")
-                End Using
-            Catch ex As Exception
-                ModelState.AddModelError("", ex.Message)
-                Return View(form)
-            End Try
+            Return FromResult(_authService.Register(form.Email, form.Passwd), Function() RedirectToAction("Login"))
         End Function
 
         Function Login() As ActionResult
@@ -45,30 +43,18 @@ Namespace Controllers
                 Return View(form)
             End If
 
-            Try
-                Using dbConnection As DbConnection = New SqlConnection()
-                    dbConnection.ConnectionString = ConnectionString
-                    Dim Id As Integer? = CType(dbConnection.ExecuteScalar("TSP_Authorize", True, New With {Key .Email = form.Email, .Passwd = form.Passwd}), Integer?)
+            Dim userId As Integer = _authService.Login(form.Email, form.Passwd)
 
-                    If Not Id.HasValue Then
-                        ModelState.AddModelError("", "Bad email or password!")
-                        Return View(form)
-                    End If
-
-                    SessionManager.UserId = Id
-                    Return RedirectToAction("Index", "Contact")
-                End Using
-            Catch ex As Exception
-                ModelState.AddModelError("", ex.Message)
-                Return View(form)
-            End Try
-
-
-            If Not ModelState.IsValid Then
+            If (userId = -1) Then
+                ModelState.AddModelError("", "Bad email or password!")
                 Return View(form)
             End If
+
+            SessionManager.UserId = userId
+            Return RedirectToAction("Index", "Contact")
         End Function
 
+        <AuthRequired>
         Function Logout() As ActionResult
             Session.Abandon()
             Return RedirectToAction("Index", "Home")

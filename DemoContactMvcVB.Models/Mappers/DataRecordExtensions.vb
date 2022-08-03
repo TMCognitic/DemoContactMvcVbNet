@@ -2,7 +2,7 @@
 
 Module DataRecordExtensions
     <Extension>
-    Public Function ToContact(dataRecord As IDataRecord) As Contact
+    Friend Function ToContact(dataRecord As IDataRecord) As Contact
         Return New Contact() With {.Id = CType(dataRecord("Id"), Integer),
                                     .LastName = CType(dataRecord("LastName"), String),
                                     .FirstName = CType(dataRecord("FirstName"), String),

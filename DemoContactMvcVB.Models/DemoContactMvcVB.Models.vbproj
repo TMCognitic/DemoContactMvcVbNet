@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{4AB1C968-22D7-4685-91D5-6029D45353B6}</ProjectGuid>
+    <ProjectGuid>{9C014138-16F6-45FB-B4AA-4F57EB4A5525}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>DemoContactMvcVB.Tools</RootNamespace>
-    <AssemblyName>DemoContactMvcVB.Tools</AssemblyName>
+    <RootNamespace>DemoContactMvcVB.Models</RootNamespace>
+    <AssemblyName>DemoContactMvcVB.Models</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
@@ -19,7 +19,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>DemoContactMvcVB.Tools.xml</DocumentationFile>
+    <DocumentationFile>DemoContactMvcVB.Models.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -28,7 +28,7 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>DemoContactMvcVB.Tools.xml</DocumentationFile>
+    <DocumentationFile>DemoContactMvcVB.Models.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
@@ -64,7 +64,8 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Connections\DbConnectionExtensions.vb" />
+    <Compile Include="Entities\Contact.vb" />
+    <Compile Include="Mappers\DataRecordExtensions.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -80,7 +81,8 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Utils\Result.vb" />
+    <Compile Include="Services\AuthService.vb" />
+    <Compile Include="Services\ContactService.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -101,8 +103,12 @@
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Patterns\" />
+    <ProjectReference Include="..\DemoContactMvcVB.Tools\DemoContactMvcVB.Tools.vbproj">
+      <Project>{4ab1c968-22d7-4685-91d5-6029d45353b6}</Project>
+      <Name>DemoContactMvcVB.Tools</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

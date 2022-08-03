@@ -13,6 +13,5 @@ Public Class EditContactForm
     <Required>
     <EmailAddress>
     Public Property Email As String
-    <Required>
     Public Property Phone As String
 End Class
